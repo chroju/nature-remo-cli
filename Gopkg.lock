@@ -34,6 +34,14 @@
   version = "v1.7.0"
 
 [[projects]]
+  digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
+  name = "github.com/go-yaml/yaml"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
+
+[[projects]]
   digest = "1:0ade334594e69404d80d9d323445d2297ff8161637f9b2d347cc6973d2d6f05b"
   name = "github.com/hashicorp/errwrap"
   packages = ["."]
@@ -99,6 +107,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/chroju/go-nature-remo/cloud",
+    "github.com/go-yaml/yaml",
     "github.com/mitchellh/cli",
   ]
   solver-name = "gps-cdcl"
