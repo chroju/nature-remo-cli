@@ -1,11 +1,10 @@
 package commands
 
 import (
-	"io/ioutil"
-	"os/user"
-	"strings"
+	"fmt"
 
 	cloud "github.com/chroju/go-nature-remo/cloud"
+	"github.com/chroju/nature-remo-cli/controller"
 	"github.com/mitchellh/cli"
 )
 
@@ -14,25 +13,34 @@ type SendCommand struct {
 }
 
 func (c *SendCommand) Run(args []string) int {
-	if len(args) != 1 {
-		c.UI.Error("Specify signal ID")
+	if len(args) != 2 {
+		c.UI.Error("Specify appliance and signal name")
 		return 1
 	}
-	signalID := args[0]
+	applianceName := args[0]
+	signalName := args[1]
 
-	my, err := user.Current()
-	if err != nil {
-		panic(err)
+	con := controller.NewController()
+	con.Read()
+
+	var signalID string
+	for _, v := range con.Setting.Appliances {
+		if v.Name == applianceName {
+			for _, signal := range v.Signals {
+				if signal.Name == signalName {
+					signalID = signal.ID
+					break
+				}
+			}
+			break
+		}
 	}
-
-	data, err := ioutil.ReadFile(my.HomeDir + "/.config/remo")
-	if err != nil {
-		c.UI.Error("Please execute init command at first")
+	if signalID == "" {
+		c.UI.Error(fmt.Sprintf("Appliance '%s' - Signal '%s' not exist", applianceName, signalName))
 		return 1
 	}
-	token := strings.TrimRight(string(data), "\r\n")
 
-	client := cloud.NewClient(token)
+	client := cloud.NewClient(con.Setting.Credential.Token)
 	if _, err := client.SendSignal(signalID); err != nil {
 		c.UI.Error(err.Error())
 		return 1
