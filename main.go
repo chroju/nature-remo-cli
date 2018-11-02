@@ -28,6 +28,9 @@ func main() {
 		"send": func() (cli.Command, error) {
 			return &commands.SendCommand{UI: UI}, nil
 		},
+		"sync": func() (cli.Command, error) {
+			return &commands.SyncCommand{UI: UI}, nil
+		},
 	}
 	UI = &cli.BasicUi{
 		Writer: os.Stdout,
