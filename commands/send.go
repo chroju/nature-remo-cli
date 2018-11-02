@@ -25,6 +25,7 @@ func (c *SendCommand) Run(args []string) int {
 		c.UI.Error(err.Error())
 		return 1
 	}
+
 	appliances, err := con.LoadAppliances()
 	if err != nil {
 		c.UI.Error(err.Error())
@@ -60,6 +61,7 @@ func (c *SendCommand) Run(args []string) int {
 		return 1
 	}
 
+	c.UI.Output("Success.")
 	return 0
 }
 

@@ -35,10 +35,9 @@ func New() (*ConfigFile, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "Unexpected error")
 	}
-	configDir := user.HomeDir + "/.config"
-	configFile := configDir + "/remo"
 
-	return &ConfigFile{path: configFile}, nil
+	path := user.HomeDir + "/.config/remo"
+	return &ConfigFile{path: path}, nil
 }
 
 func (c *ConfigFile) SyncConfigFile(token string) error {
@@ -58,6 +57,7 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 			return errors.Wrap(err, fmt.Sprintf("Failed to make directory at %s", dirPath))
 		}
 	}
+
 	file, err := os.Create(c.path)
 	if err != nil {
 		return errors.Wrap(err, fmt.Sprintf("Failed to create config file %s", c.path))
@@ -69,6 +69,7 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	if err != nil {
 		return errors.Wrap(err, "Failed to get appliances from config file")
 	}
+
 	for _, a := range appliances {
 		s.Appliances = append(s.Appliances, Appliance{Name: a.Nickname, ID: a.ID, Signals: a.Signals})
 	}
@@ -93,7 +94,6 @@ func (c *ConfigFile) LoadToken() (string, error) {
 
 func (c *ConfigFile) LoadAppliances() ([]Appliance, error) {
 	s, err := c.readFile()
-	fmt.Println(s.Credential.Token)
 	if err != nil {
 		return nil, err
 	}
@@ -106,9 +106,12 @@ func (c *ConfigFile) readFile() (*Setting, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to read config file")
 	}
+
 	s := Setting{}
-	yaml.Unmarshal(data, s)
-	fmt.Println(s.Credential.Token)
+	err = yaml.Unmarshal(data, &s)
+	if err != nil {
+		return nil, err
+	}
 
 	return &s, nil
 }
