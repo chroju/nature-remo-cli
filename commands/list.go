@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os/user"
-	"strings"
 
 	cloud "github.com/chroju/go-nature-remo/cloud"
+	"github.com/chroju/nature-remo-cli/configfile"
+	"github.com/go-yaml/yaml"
 	"github.com/mitchellh/cli"
 )
 
@@ -31,9 +32,12 @@ func (c *ListCommand) Run(args []string) int {
 		c.UI.Error("Please execute init command at first")
 		return 1
 	}
-	token := strings.TrimRight(string(data), "\r\n")
+	// token := strings.TrimRight(string(data), "\r\n")
 
-	client := cloud.NewClient(token)
+	s := configfile.Setting{}
+	yaml.Unmarshal(data, &s)
+
+	client := cloud.NewClient(s.Credential.Token)
 
 	switch target {
 	case "appliances":

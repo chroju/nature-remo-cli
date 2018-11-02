@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	cloud "github.com/chroju/go-nature-remo/cloud"
-	"github.com/chroju/nature-remo-cli/controller"
+	"github.com/chroju/nature-remo-cli/configfile"
 	"github.com/mitchellh/cli"
 )
 
@@ -20,11 +20,19 @@ func (c *SendCommand) Run(args []string) int {
 	applianceName := args[0]
 	signalName := args[1]
 
-	con := controller.NewController()
-	con.Read()
+	con, err := configfile.New()
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 1
+	}
+	appliances, err := con.LoadAppliances()
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 1
+	}
 
 	var signalID string
-	for _, v := range con.Setting.Appliances {
+	for _, v := range appliances {
 		if v.Name == applianceName {
 			for _, signal := range v.Signals {
 				if signal.Name == signalName {
@@ -40,7 +48,13 @@ func (c *SendCommand) Run(args []string) int {
 		return 1
 	}
 
-	client := cloud.NewClient(con.Setting.Credential.Token)
+	token, err := con.LoadToken()
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 1
+	}
+
+	client := cloud.NewClient(token)
 	if _, err := client.SendSignal(signalID); err != nil {
 		c.UI.Error(err.Error())
 		return 1

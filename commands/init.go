@@ -4,26 +4,12 @@ import (
 	"bufio"
 	"os"
 
-	cloud "github.com/chroju/go-nature-remo/cloud"
-	"github.com/chroju/nature-remo-cli/controller"
+	"github.com/chroju/nature-remo-cli/configfile"
 	"github.com/mitchellh/cli"
 )
 
 type InitCommand struct {
 	UI cli.Ui
-}
-
-type Appliance struct {
-	Name    string
-	ID      string
-	Signals []cloud.Signal
-}
-
-type Setting struct {
-	Credential struct {
-		Token string
-	}
-	Appliances []Appliance
 }
 
 func (c *InitCommand) Run(args []string) int {
@@ -34,19 +20,34 @@ func (c *InitCommand) Run(args []string) int {
 
 	c.UI.Output("Nature Remo OAuth Token:")
 	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		token := scanner.Text()
+	scanner.Scan()
+	token := scanner.Text()
 
-		c.UI.Output("Initializing ...")
-		con := controller.NewController()
-		con.SetToken(token)
-		if err := con.Sync(); err != nil {
-			c.UI.Error("Failed to initialize !")
-			return 1
-		}
-		c.UI.Output("Successfully initialized.")
-		break
+	con, err := configfile.New()
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 1
 	}
+
+	if _, err := con.LoadToken(); err == nil {
+		c.UI.Output("You have already initialized remo. Override current settings ? [y/n]")
+		for scanner.Scan() {
+			if scanner.Text() == "y" {
+				break
+			} else if scanner.Text() == "n" {
+				return 2
+			} else {
+				c.UI.Output("[y/n]?")
+			}
+		}
+	}
+
+	c.UI.Output("Initializing ...")
+	if err := con.SyncConfigFile(token); err != nil {
+		c.UI.Error("Failed to initialize !")
+		return 1
+	}
+	c.UI.Output("Successfully initialized.")
 
 	return 0
 }
