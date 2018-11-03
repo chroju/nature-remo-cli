@@ -3,6 +3,8 @@ package commands
 import (
 	"fmt"
 
+	"github.com/fatih/color"
+
 	cloud "github.com/chroju/go-nature-remo/cloud"
 	"github.com/chroju/nature-remo-cli/configfile"
 	"github.com/mitchellh/cli"
@@ -14,7 +16,7 @@ type SendCommand struct {
 
 func (c *SendCommand) Run(args []string) int {
 	if len(args) != 2 {
-		c.UI.Error("Specify appliance and signal name")
+		c.UI.Warn(fmt.Sprintf("%s\nSpecify appliance and signal name", helpSend))
 		return 1
 	}
 	applianceName := args[0]
@@ -45,7 +47,7 @@ func (c *SendCommand) Run(args []string) int {
 		}
 	}
 	if signalID == "" {
-		c.UI.Error(fmt.Sprintf("Appliance '%s' - Signal '%s' not exist", applianceName, signalName))
+		c.UI.Error(color.RedString(fmt.Sprintf("Appliance '%s' - Signal '%s' is invalid", applianceName, signalName)))
 		return 1
 	}
 
@@ -66,9 +68,11 @@ func (c *SendCommand) Run(args []string) int {
 }
 
 func (c *SendCommand) Help() string {
-	return "send signals"
+	return helpSend
 }
 
 func (c *SendCommand) Synopsis() string {
-	return "remo send"
+	return "Send signal"
 }
+
+const helpSend = "Usage: remo send <appliance> <signal>"

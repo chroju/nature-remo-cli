@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"fmt"
+
 	"github.com/chroju/nature-remo-cli/configfile"
 	"github.com/mitchellh/cli"
 )
@@ -11,7 +13,7 @@ type SyncCommand struct {
 
 func (c *SyncCommand) Run(args []string) int {
 	if len(args) != 0 {
-		c.UI.Error("command \"sync\" does not expect any args")
+		c.UI.Warn(fmt.Sprintf("%s\ncommand \"sync\" does not expect any args", helpSync))
 		return 1
 	}
 
@@ -31,9 +33,11 @@ func (c *SyncCommand) Run(args []string) int {
 }
 
 func (c *SyncCommand) Help() string {
-	return "Usage: remo sync"
+	return helpSync
 }
 
 func (c *SyncCommand) Synopsis() string {
-	return "Sync local config with your latest one."
+	return "Sync local config with your latest one"
 }
+
+const helpSync = "Usage: remo sync"

@@ -44,13 +44,14 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	if token == "" {
 		file, err := c.readFile()
 		if err != nil {
-			return errors.Wrap(err, "Failed to read token from config file")
+			return err
 		}
 		token = file.Credential.Token
 	}
 
 	s := Setting{}
 	s.Credential.Token = token
+
 	dirPath := path.Dir(c.path)
 	if _, err := os.Stat(dirPath); err == os.ErrNotExist {
 		if err := os.MkdirAll(dirPath, 0755); err != nil {
@@ -67,7 +68,7 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	client := cloud.NewClient(token)
 	appliances, err := client.GetAppliances()
 	if err != nil {
-		return errors.Wrap(err, "Failed to get appliances from config file")
+		return fmt.Errorf("Failed to login")
 	}
 
 	for _, a := range appliances {
@@ -86,7 +87,7 @@ func (c *ConfigFile) LoadToken() (string, error) {
 		return "", err
 	}
 	if s.Credential.Token == "" {
-		return "", fmt.Errorf("You have not initialized")
+		return "", fmt.Errorf("You have not correctly initialized. Please execute \"remo init\"")
 	}
 
 	return s.Credential.Token, nil
@@ -104,7 +105,7 @@ func (c *ConfigFile) LoadAppliances() ([]Appliance, error) {
 func (c *ConfigFile) readFile() (*Setting, error) {
 	data, err := ioutil.ReadFile(c.path)
 	if err != nil {
-		return nil, errors.Wrap(err, "Failed to read config file")
+		return nil, errors.Wrap(err, "You have not correctly initialized. Please execute \"remo init\"")
 	}
 
 	s := Setting{}

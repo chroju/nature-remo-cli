@@ -13,7 +13,7 @@ type ListCommand struct {
 
 func (c *ListCommand) Run(args []string) int {
 	if len(args) != 0 {
-		c.UI.Error("command \"list\" does not expect any args")
+		c.UI.Warn(fmt.Sprintf("%s\ncommand \"list\" does not expect any args", helpList))
 		return 1
 	}
 
@@ -39,9 +39,11 @@ func (c *ListCommand) Run(args []string) int {
 }
 
 func (c *ListCommand) Help() string {
-	return "list up appliances or signals"
+	return helpList
 }
 
 func (c *ListCommand) Synopsis() string {
-	return "remo list"
+	return "Show all appliance and signal names"
 }
+
+const helpList = "Usage: remo list"

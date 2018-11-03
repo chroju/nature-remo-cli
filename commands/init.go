@@ -2,9 +2,11 @@ package commands
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 
 	"github.com/chroju/nature-remo-cli/configfile"
+	"github.com/fatih/color"
 	"github.com/mitchellh/cli"
 )
 
@@ -14,7 +16,7 @@ type InitCommand struct {
 
 func (c *InitCommand) Run(args []string) int {
 	if len(args) > 0 {
-		c.UI.Error("command \"init\" does not expect any args")
+		c.UI.Error(fmt.Sprintf("%s\ncommand \"init\" does not expect any args", helpInit))
 		return 1
 	}
 
@@ -44,7 +46,7 @@ func (c *InitCommand) Run(args []string) int {
 
 	c.UI.Output("Initializing ...")
 	if err := con.SyncConfigFile(token); err != nil {
-		c.UI.Error("Failed to initialize !")
+		c.UI.Error(color.RedString("Failed to initialize!"))
 		return 1
 	}
 	c.UI.Output("Successfully initialized.")
@@ -53,9 +55,11 @@ func (c *InitCommand) Run(args []string) int {
 }
 
 func (c *InitCommand) Help() string {
-	return "initialize command"
+	return helpInit
 }
 
 func (c *InitCommand) Synopsis() string {
-	return "remo init"
+	return "Initialize remo with your OAuth token"
 }
+
+const helpInit = "Usage: remo init"
