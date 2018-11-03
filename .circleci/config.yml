@@ -1,0 +1,48 @@
+version: 2
+
+jobs:
+  checkout:
+    docker:
+      - image: circleci/golang:1.11
+    working_directory: /go/src/github.com/chroju/nature-remo-cli
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - vendor
+      - run: go get github.com/golang/dep/cmd/dep
+      - run: dep ensure -v
+      - save_cache:
+          key: vendor-{{ checksum "Gopkg.lock" }}
+          paths:
+            - vendor
+      - save_cache:
+          key: source-{{ epoch }}
+          paths:
+            - ~
+  deploy:
+    docker:
+      - image: circleci/golang:1.11
+    working_directory: /go/src/github.com/chroju/nature-remo-cli
+    steps:
+      - restore_cache:
+          keys:
+            - source
+      - run: go get github.com/mitchellh/gox
+      - run: go get github.com/tcnksm/ghr
+      - run: make build
+      - run: ${CIRCLE_WORKING_DIRECTORY}/.circleci/compress_binaries.sh
+      - run: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME $CIRCLE_TAG pkg/
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy:
+          requires:
+            - checkout
+          filters:
+            tags:
+              only: /^v.*$/
+            branches:
+              ignore: /.*/
