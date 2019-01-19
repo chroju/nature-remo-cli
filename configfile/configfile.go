@@ -1,6 +1,7 @@
 package configfile
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -8,15 +9,15 @@ import (
 	"os/user"
 	"path"
 
-	cloud "github.com/chroju/go-nature-remo/cloud"
 	"github.com/go-yaml/yaml"
 	"github.com/pkg/errors"
+	"github.com/tenntenn/natureremo"
 )
 
 type Appliance struct {
 	Name    string
 	ID      string
-	Signals []cloud.Signal
+	Signals []*natureremo.Signal
 }
 
 type Setting struct {
@@ -65,8 +66,10 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	}
 	defer file.Close()
 
-	client := cloud.NewClient(token)
-	appliances, err := client.GetAppliances()
+	// client := cloud.NewClient(token)
+	client := natureremo.NewClient(token)
+	ctx := context.Background()
+	appliances, err := client.ApplianceService.GetAll(ctx)
 	if err != nil {
 		return fmt.Errorf("Failed to login")
 	}

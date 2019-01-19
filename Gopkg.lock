@@ -103,6 +103,14 @@
   version = "v1.2.0"
 
 [[projects]]
+  digest = "1:516d85094a7310cc112e49c7254fe6271a9e68e19b0f62c17d1baa11cd34fce2"
+  name = "github.com/tenntenn/natureremo"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4732091860d68334497b2ea03750731718041c2f"
+  version = "v0.0.1"
+
+[[projects]]
   branch = "master"
   digest = "1:be4f165c438aa39318fd5c8c180a95f4a52524641c0b714638b0fd9fd912b38d"
   name = "golang.org/x/sys"
@@ -119,6 +127,7 @@
     "github.com/go-yaml/yaml",
     "github.com/mitchellh/cli",
     "github.com/pkg/errors",
+    "github.com/tenntenn/natureremo",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
