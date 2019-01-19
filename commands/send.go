@@ -1,13 +1,14 @@
 package commands
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/fatih/color"
 
-	cloud "github.com/chroju/go-nature-remo/cloud"
 	"github.com/chroju/nature-remo-cli/configfile"
 	"github.com/mitchellh/cli"
+	"github.com/tenntenn/natureremo"
 )
 
 type SendCommand struct {
@@ -34,19 +35,19 @@ func (c *SendCommand) Run(args []string) int {
 		return 1
 	}
 
-	var signalID string
+	var toSendSignal *natureremo.Signal
 	for _, v := range appliances {
 		if v.Name == applianceName {
 			for _, signal := range v.Signals {
 				if signal.Name == signalName {
-					signalID = signal.ID
+					toSendSignal = signal
 					break
 				}
 			}
 			break
 		}
 	}
-	if signalID == "" {
+	if toSendSignal == nil {
 		c.UI.Error(color.RedString(fmt.Sprintf("Appliance '%s' - Signal '%s' is invalid", applianceName, signalName)))
 		return 1
 	}
@@ -57,8 +58,9 @@ func (c *SendCommand) Run(args []string) int {
 		return 1
 	}
 
-	client := cloud.NewClient(token)
-	if _, err := client.SendSignal(signalID); err != nil {
+	client := natureremo.NewClient(token)
+	ctx := context.Background()
+	if err := client.SignalService.Send(ctx, toSendSignal); err != nil {
 		c.UI.Error(err.Error())
 		return 1
 	}
