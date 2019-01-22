@@ -30,7 +30,7 @@ jobs:
             - source
       - run: go get github.com/mitchellh/gox
       - run: go get github.com/tcnksm/ghr
-      - run: make build
+      - run: make crossbuild
       - run: ${CIRCLE_WORKING_DIRECTORY}/.circleci/compress_binaries.sh
       - run: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME $CIRCLE_TAG pkg/
 

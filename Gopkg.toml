@@ -27,7 +27,7 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/chroju/go-nature-remo"
+  name = "github.com/tenntenn/natureremo"
 
 [[constraint]]
   name = "github.com/mitchellh/cli"

@@ -18,14 +18,6 @@
   version = "v0.1.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:ff5aa602ab7910353eceb9aa09f8b768cf10e25f1e8af63c06ad48a203d362fa"
-  name = "github.com/chroju/go-nature-remo"
-  packages = ["cloud"]
-  pruneopts = "UT"
-  revision = "a4c363bfa97aee004273263c5b958bf7ad0cadfe"
-
-[[projects]]
   digest = "1:865079840386857c809b72ce300be7580cb50d3d3129ce11bf9aa6ca2bc1934a"
   name = "github.com/fatih/color"
   packages = ["."]
@@ -104,6 +96,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:516d85094a7310cc112e49c7254fe6271a9e68e19b0f62c17d1baa11cd34fce2"
+  name = "github.com/tenntenn/natureremo"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4732091860d68334497b2ea03750731718041c2f"
+
+[[projects]]
+  branch = "master"
   digest = "1:be4f165c438aa39318fd5c8c180a95f4a52524641c0b714638b0fd9fd912b38d"
   name = "golang.org/x/sys"
   packages = ["unix"]
@@ -114,11 +114,11 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/chroju/go-nature-remo/cloud",
     "github.com/fatih/color",
     "github.com/go-yaml/yaml",
     "github.com/mitchellh/cli",
     "github.com/pkg/errors",
+    "github.com/tenntenn/natureremo",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
