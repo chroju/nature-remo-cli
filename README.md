@@ -11,6 +11,8 @@ You will need your Nature Remo OAuth2 access token. Please read Nature Remo offi
 Usage
 ----
 
+### Initialize
+
 At first, you must execute `remo init` command to initialize. You will be prompted for your OAuth2 token.
 
 ```
@@ -21,10 +23,12 @@ Initializing ...
 Successfully initialized.
 ```
 
-`remo list` command shows your available appliance and signal names.
+### Signal
+
+`remo signal list` command shows your available appliance and signal names.
 
 ```
-$ remo list
+$ remo signal list
 light on
 light off
 light brighten
@@ -34,11 +38,32 @@ TV 1
 ...
 ```
 
-`remo send` will send actual Nature Remo signal.
+`remo signal send` will send actual Nature Remo signal.
 
 ```
-$ remo send light brighten
+$ remo signal send light brighten
 Success.
+```
+
+### Aircon settings
+
+`remo aircon list` will show you current aircon setting.
+
+```
+$ remo aircon list
+           POWER  MODE  VOL   TEMP
+Bed Room:  ON     warm  2     25
+Dining:    OFF    auto  auto  22
+```
+
+You can update aircon setting with `remo aircon send`.
+
+```
+$ remo aircon send --name 'Bed Room' -t 23
+Updated Aircon 'Bed Room' (TEMP: 25 -> 23)
+
+$ remo aircon send --name Dining --on
+Updated Aircon 'Dining' (POWER: OFF -> ON)
 ```
 
 Install
@@ -84,6 +109,7 @@ TODO
 * [ ] Write tests.
 * [ ] Implement commands for aircon settings.
 * [ ] Implement commands for some sensors.
+* [ ] Support multiple Nature Remo devices.
 
 Author
 ----
