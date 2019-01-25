@@ -18,6 +18,12 @@ var UI cli.Ui
 func main() {
 	c := cli.NewCLI(app, version)
 	c.Args = os.Args[1:]
+	UI = &cli.BasicUi{
+		Reader:      os.Stdin,
+		Writer:      os.Stdout,
+		ErrorWriter: os.Stderr,
+	}
+
 	c.Commands = map[string]cli.CommandFactory{
 		"init": func() (cli.Command, error) {
 			return &commands.InitCommand{UI: UI}, nil
@@ -31,9 +37,6 @@ func main() {
 		"sync": func() (cli.Command, error) {
 			return &commands.SyncCommand{UI: UI}, nil
 		},
-	}
-	UI = &cli.BasicUi{
-		Writer: os.Stdout,
 	}
 
 	exitStatus, err := c.Run()

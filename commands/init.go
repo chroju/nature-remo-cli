@@ -1,9 +1,7 @@
 package commands
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 
 	"github.com/chroju/nature-remo-cli/configfile"
 	"github.com/fatih/color"
@@ -20,10 +18,11 @@ func (c *InitCommand) Run(args []string) int {
 		return 1
 	}
 
-	c.UI.Output("Nature Remo OAuth Token:")
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	token := scanner.Text()
+	token, err := c.UI.AskSecret("Nature Remo OAuth Token:")
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 1
+	}
 
 	con, err := configfile.New()
 	if err != nil {
@@ -32,14 +31,22 @@ func (c *InitCommand) Run(args []string) int {
 	}
 
 	if _, err := con.LoadToken(); err == nil {
-		c.UI.Output("You have already initialized remo. Override current settings ? [y/n]")
-		for scanner.Scan() {
-			if scanner.Text() == "y" {
+		reply, err := c.UI.Ask("You have already initialized remo. Override current settings ? [y/n]")
+		if err != nil {
+			c.UI.Error(err.Error())
+			return 1
+		}
+		for {
+			if reply == "y" {
 				break
-			} else if scanner.Text() == "n" {
+			} else if reply == "n" {
 				return 2
 			} else {
-				c.UI.Output("[y/n]?")
+				reply, err = c.UI.Ask("[y/n]?")
+				if err != nil {
+					c.UI.Error(err.Error())
+					return 1
+				}
 			}
 		}
 	}
