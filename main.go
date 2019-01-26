@@ -28,6 +28,9 @@ func main() {
 		"init": func() (cli.Command, error) {
 			return &commands.InitCommand{UI: UI}, nil
 		},
+		"aircon": func() (cli.Command, error) {
+			return &commands.AirconCommand{UI: UI}, nil
+		},
 		"list": func() (cli.Command, error) {
 			return &commands.ListCommand{UI: UI}, nil
 		},
