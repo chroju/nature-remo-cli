@@ -12,7 +12,7 @@ import (
 )
 
 type SendCommand struct {
-	UI cli.Ui
+	UI cli.BasicUi
 }
 
 func (c *SendCommand) Run(args []string) int {

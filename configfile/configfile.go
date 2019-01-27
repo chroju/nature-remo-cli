@@ -17,6 +17,7 @@ import (
 type Appliance struct {
 	Name    string
 	ID      string
+	Type    natureremo.ApplianceType
 	Signals []*natureremo.Signal
 }
 
@@ -75,7 +76,7 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	}
 
 	for _, a := range appliances {
-		s.Appliances = append(s.Appliances, Appliance{Name: a.Nickname, ID: a.ID, Signals: a.Signals})
+		s.Appliances = append(s.Appliances, Appliance{Name: a.Nickname, ID: a.ID, Type: a.Type, Signals: a.Signals})
 	}
 
 	y, err := yaml.Marshal(&s)

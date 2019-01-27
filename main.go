@@ -13,12 +13,12 @@ const (
 	version = "0.0.1"
 )
 
-var UI cli.Ui
+var UI cli.BasicUi
 
 func main() {
 	c := cli.NewCLI(app, version)
 	c.Args = os.Args[1:]
-	UI = &cli.BasicUi{
+	UI = cli.BasicUi{
 		Reader:      os.Stdin,
 		Writer:      os.Stdout,
 		ErrorWriter: os.Stderr,
@@ -28,8 +28,8 @@ func main() {
 		"init": func() (cli.Command, error) {
 			return &commands.InitCommand{UI: UI}, nil
 		},
-		"aircon": func() (cli.Command, error) {
-			return &commands.AirconCommand{UI: UI}, nil
+		"aircon list": func() (cli.Command, error) {
+			return &commands.AirconListCommand{UI: UI}, nil
 		},
 		"list": func() (cli.Command, error) {
 			return &commands.ListCommand{UI: UI}, nil

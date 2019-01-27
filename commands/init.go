@@ -9,18 +9,12 @@ import (
 )
 
 type InitCommand struct {
-	UI cli.Ui
+	UI cli.BasicUi
 }
 
 func (c *InitCommand) Run(args []string) int {
 	if len(args) > 0 {
 		c.UI.Error(fmt.Sprintf("%s\ncommand \"init\" does not expect any args", helpInit))
-		return 1
-	}
-
-	token, err := c.UI.AskSecret("Nature Remo OAuth Token:")
-	if err != nil {
-		c.UI.Error(err.Error())
 		return 1
 	}
 
@@ -49,6 +43,12 @@ func (c *InitCommand) Run(args []string) int {
 				}
 			}
 		}
+	}
+
+	token, err := c.UI.AskSecret("Nature Remo OAuth Token:")
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 1
 	}
 
 	c.UI.Output("Initializing ...")
