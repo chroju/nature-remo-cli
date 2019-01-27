@@ -41,7 +41,7 @@ func (c *AirconListCommand) Run(args []string) int {
 	}
 
 	table := tablewriter.NewWriter(c.UI.Writer)
-	table.SetHeader([]string{"NAME", "POWER", "TEMP", "MODE", "DIRECTION"})
+	table.SetHeader([]string{"NAME", "POWER", "TEMP", "MODE", "VOLUME", "DIRECTION"})
 	table.SetBorder(false)
 	table.SetRowLine(false)
 	table.SetHeaderLine(false)
@@ -52,10 +52,17 @@ func (c *AirconListCommand) Run(args []string) int {
 	for _, v := range appliances {
 		if v.Type == "AC" {
 			a := v.AirConSettings
+			var button string
+			if a.Button == natureremo.ButtonPowerOff {
+				button = "OFF"
+			} else {
+				button = "ON"
+			}
 			table.Append([]string{v.Nickname,
-				a.Button.StringValue(),
+				button,
 				a.Temperature,
 				a.OperationMode.StringValue(),
+				a.AirVolume.StringValue(),
 				a.AirDirection.StringValue()})
 		}
 	}
