@@ -52,8 +52,14 @@ func (c *AirconListCommand) Run(args []string) int {
 	for _, v := range appliances {
 		if v.Type == "AC" {
 			a := v.AirConSettings
+			var button string
+			if a.Button == natureremo.ButtonPowerOff {
+				button = "OFF"
+			} else {
+				button = "ON"
+			}
 			table.Append([]string{v.Nickname,
-				a.Button.StringValue(),
+				button,
 				a.Temperature,
 				a.OperationMode.StringValue(),
 				a.AirDirection.StringValue()})
