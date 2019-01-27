@@ -111,6 +111,14 @@
   version = "v1.2.0"
 
 [[projects]]
+  digest = "1:c1b1102241e7f645bc8e0c22ae352e8f0dc6484b6cb4d132fa9f24174e0119e2"
+  name = "github.com/spf13/pflag"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
+  version = "v1.0.3"
+
+[[projects]]
   branch = "master"
   digest = "1:516d85094a7310cc112e49c7254fe6271a9e68e19b0f62c17d1baa11cd34fce2"
   name = "github.com/tenntenn/natureremo"
@@ -135,6 +143,7 @@
     "github.com/mitchellh/cli",
     "github.com/olekukonko/tablewriter",
     "github.com/pkg/errors",
+    "github.com/spf13/pflag",
     "github.com/tenntenn/natureremo",
   ]
   solver-name = "gps-cdcl"

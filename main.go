@@ -31,6 +31,9 @@ func main() {
 		"aircon list": func() (cli.Command, error) {
 			return &commands.AirconListCommand{UI: UI}, nil
 		},
+		"aircon send": func() (cli.Command, error) {
+			return &commands.AirconSendCommand{UI: UI}, nil
+		},
 		"list": func() (cli.Command, error) {
 			return &commands.ListCommand{UI: UI}, nil
 		},
