@@ -103,6 +103,8 @@ func (c *AirconSendCommand) Run(args []string) int {
 		newSettings.OperationMode = natureremo.OperationModeDry
 	case "blow":
 		newSettings.OperationMode = natureremo.OperationModeBlow
+	case "auto":
+		newSettings.OperationMode = natureremo.OperationModeAuto
 	}
 	if newSettings.OperationMode != settings.OperationMode {
 		updateMessage = append(updateMessage, fmt.Sprintf("%s -> %s", settings.OperationMode.StringValue(), mode))
@@ -129,6 +131,8 @@ func (c *AirconSendCommand) Run(args []string) int {
 		newSettings.AirVolume = natureremo.AirVolume9
 	case "10":
 		newSettings.AirVolume = natureremo.AirVolume10
+	case "auto":
+		newSettings.AirVolume = natureremo.AirVolumeAuto
 	}
 	if newSettings.AirVolume != settings.AirVolume {
 		updateMessage = append(updateMessage, fmt.Sprintf("%s -> %s", settings.AirVolume.StringValue(), volume))
@@ -158,4 +162,13 @@ func (c *AirconSendCommand) Synopsis() string {
 	return "Update the aircon settings."
 }
 
-const helpAirconSend = "Usage: remo aircon send [OPTION]"
+const helpAirconSend = `Usage: remo aircon send [OPTION]
+
+  -n, --name string          Aircon name to operate
+
+  --on                       Power on the aircon
+  --off                      Power off the aircon
+  -m, --mode string          Aircon operation mode
+  -t, --temperature string   Aircon temperature
+  -v, --volume string        Aircon wind volume
+`
