@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"strings"
@@ -12,7 +13,7 @@ import (
 )
 
 type AirconSendCommand struct {
-	UI cli.BasicUi
+	UI cli.Ui
 }
 
 func (c *AirconSendCommand) Run(args []string) int {
@@ -26,8 +27,9 @@ func (c *AirconSendCommand) Run(args []string) int {
 	var on, off bool
 	var name, mode, volume, temperature string
 
+	buf := &bytes.Buffer{}
 	f := flag.NewFlagSet("aircon_list", flag.ContinueOnError)
-	f.SetOutput(c.UI.Writer)
+	f.SetOutput(buf)
 	f.BoolVar(&on, "on", false, "Power on the aircon")
 	f.BoolVar(&off, "off", false, "Power off the aircon")
 	f.StringVarP(&name, "name", "n", "", "Aircon name to operate")

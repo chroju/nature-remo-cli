@@ -18,14 +18,6 @@
   version = "v0.1.0"
 
 [[projects]]
-  digest = "1:865079840386857c809b72ce300be7580cb50d3d3129ce11bf9aa6ca2bc1934a"
-  name = "github.com/fatih/color"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "5b77d2a35fb0ede96d138fc9a99f5c9b6aef11b4"
-  version = "v1.7.0"
-
-[[projects]]
   digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
   name = "github.com/go-yaml/yaml"
   packages = ["."]
@@ -138,7 +130,6 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/fatih/color",
     "github.com/go-yaml/yaml",
     "github.com/mitchellh/cli",
     "github.com/olekukonko/tablewriter",

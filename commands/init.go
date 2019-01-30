@@ -4,12 +4,11 @@ import (
 	"fmt"
 
 	"github.com/chroju/nature-remo-cli/configfile"
-	"github.com/fatih/color"
 	"github.com/mitchellh/cli"
 )
 
 type InitCommand struct {
-	UI cli.BasicUi
+	UI cli.Ui
 }
 
 func (c *InitCommand) Run(args []string) int {
@@ -53,7 +52,7 @@ func (c *InitCommand) Run(args []string) int {
 
 	c.UI.Output("Initializing ...")
 	if err := con.SyncConfigFile(token); err != nil {
-		c.UI.Error(color.RedString("Failed to initialize!"))
+		c.UI.Error("Failed to initialize!")
 		return 1
 	}
 	c.UI.Output("Successfully initialized.")

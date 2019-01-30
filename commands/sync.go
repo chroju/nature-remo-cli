@@ -8,7 +8,7 @@ import (
 )
 
 type SyncCommand struct {
-	UI cli.BasicUi
+	UI cli.Ui
 }
 
 func (c *SyncCommand) Run(args []string) int {

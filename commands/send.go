@@ -4,15 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/fatih/color"
-
 	"github.com/chroju/nature-remo-cli/configfile"
 	"github.com/mitchellh/cli"
 	"github.com/tenntenn/natureremo"
 )
 
 type SendCommand struct {
-	UI cli.BasicUi
+	UI cli.Ui
 }
 
 func (c *SendCommand) Run(args []string) int {
@@ -48,7 +46,7 @@ func (c *SendCommand) Run(args []string) int {
 		}
 	}
 	if toSendSignal == nil {
-		c.UI.Error(color.RedString(fmt.Sprintf("Appliance '%s' - Signal '%s' is invalid", applianceName, signalName)))
+		c.UI.Error(fmt.Sprintf("Appliance '%s' - Signal '%s' is invalid", applianceName, signalName))
 		return 1
 	}
 

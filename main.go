@@ -13,12 +13,10 @@ const (
 	version = "0.0.1"
 )
 
-var UI cli.BasicUi
-
 func main() {
 	c := cli.NewCLI(app, version)
 	c.Args = os.Args[1:]
-	UI = cli.BasicUi{
+	ui := &cli.BasicUi{
 		Reader:      os.Stdin,
 		Writer:      os.Stdout,
 		ErrorWriter: os.Stderr,
@@ -26,28 +24,28 @@ func main() {
 
 	c.Commands = map[string]cli.CommandFactory{
 		"init": func() (cli.Command, error) {
-			return &commands.InitCommand{UI: UI}, nil
+			return &commands.InitCommand{UI: ui}, nil
 		},
 		"aircon list": func() (cli.Command, error) {
-			return &commands.AirconListCommand{UI: UI}, nil
+			return &commands.AirconListCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
 		"aircon send": func() (cli.Command, error) {
-			return &commands.AirconSendCommand{UI: UI}, nil
+			return &commands.AirconSendCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
 		"list": func() (cli.Command, error) {
-			return &commands.ListCommand{UI: UI}, nil
+			return &commands.ListCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
 		"send": func() (cli.Command, error) {
-			return &commands.SendCommand{UI: UI}, nil
+			return &commands.SendCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
 		"sync": func() (cli.Command, error) {
-			return &commands.SyncCommand{UI: UI}, nil
+			return &commands.SyncCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
 	}
 
 	exitStatus, err := c.Run()
 	if err != nil {
-		UI.Error(fmt.Sprintf("Error: %s", err))
+		ui.Error(fmt.Sprintf("Error: %s", err))
 	}
 
 	os.Exit(exitStatus)

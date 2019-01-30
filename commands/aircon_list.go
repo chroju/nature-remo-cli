@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"bytes"
 	"context"
 
 	"github.com/chroju/nature-remo-cli/configfile"
@@ -10,7 +11,7 @@ import (
 )
 
 type AirconListCommand struct {
-	UI cli.BasicUi
+	UI cli.Ui
 }
 
 func (c *AirconListCommand) Run(args []string) int {
@@ -40,7 +41,8 @@ func (c *AirconListCommand) Run(args []string) int {
 		return 1
 	}
 
-	table := tablewriter.NewWriter(c.UI.Writer)
+	buf := &bytes.Buffer{}
+	table := tablewriter.NewWriter(buf)
 	table.SetHeader([]string{"NAME", "POWER", "TEMP", "MODE", "VOLUME", "DIRECTION"})
 	table.SetBorder(false)
 	table.SetRowLine(false)
@@ -67,6 +69,7 @@ func (c *AirconListCommand) Run(args []string) int {
 		}
 	}
 	table.Render()
+	c.UI.Output(buf.String())
 
 	return 0
 }

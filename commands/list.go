@@ -8,7 +8,7 @@ import (
 )
 
 type ListCommand struct {
-	UI cli.BasicUi
+	UI cli.Ui
 }
 
 func (c *ListCommand) Run(args []string) int {
