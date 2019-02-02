@@ -26,6 +26,9 @@ func main() {
 		"init": func() (cli.Command, error) {
 			return &commands.InitCommand{UI: ui}, nil
 		},
+		"aircon": func() (cli.Command, error) {
+			return &commands.AirconCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
+		},
 		"aircon list": func() (cli.Command, error) {
 			return &commands.AirconListCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
