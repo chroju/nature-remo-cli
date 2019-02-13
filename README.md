@@ -1,7 +1,7 @@
 Nature Remo command line interface
 ========
 
-`remo` is the command line interface for [Nature Remo](https://nature.global/).
+`remo` is the unofficial command line interface for [Nature Remo](https://nature.global/).
 
 Prerequisites
 ----
@@ -29,12 +29,13 @@ Successfully initialized.
 
 ```
 $ remo signal list
-light on
-light off
-light brighten
-light darken
-TV power
-TV 1
+APPLIANCE  SIGNAL
+light      on
+light      off
+light      brighten
+light      darken
+TV         power
+TV         1
 ...
 ```
 
@@ -42,7 +43,7 @@ TV 1
 
 ```
 $ remo signal send light brighten
-Success.
+Succeeded.
 ```
 
 ### Aircon settings
@@ -75,7 +76,7 @@ Download binary from [here](https://github.com/chroju/nature-remo-cli/releases) 
 
 ### go get
 
-If you have installed Golang environment in your PC, you also install with `go get` command.
+If you have set up Golang environment in your computer, you can also install with `go get` command.
 
 ```
 $ go get -u github.com/chroju/nature-remo-cli
@@ -101,15 +102,14 @@ appliances:
     image: ico_bar
 ```
 
-`remo list` and `remo send` commands load your Nature Remo config from here, so you can execute `remo send light brighten` and `remo send light darken` with above file. If you would like to execute commands with the signal names you like, you can rewrite your YAML.
+`remo signal` commands load the names of your Nature Remo appliances and signals from here, so you can execute `remo send light brighten` and `remo send light darken` with above file. If you would like to execute commands with the signal names you like, you can rewrite your YAML.
 
 TODO
 ----
 
 * [ ] Write tests.
-* [ ] Implement commands for aircon settings.
 * [ ] Implement commands for some sensors.
-* [ ] Support multiple Nature Remo devices.
+* [ ] Implement commands for TV.
 
 Author
 ----
