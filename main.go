@@ -35,6 +35,9 @@ func main() {
 		"aircon send": func() (cli.Command, error) {
 			return &commands.AirconSendCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
+		"signal": func() (cli.Command, error) {
+			return &commands.SignalCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
+		},
 		"list": func() (cli.Command, error) {
 			return &commands.ListCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
