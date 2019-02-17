@@ -17,7 +17,7 @@ func (c *SignalCommand) Run(args []string) int {
 }
 
 func (c *SignalCommand) Help() string {
-	return strings.TrimSpace(helpList)
+	return strings.TrimSpace(helpSignal)
 }
 
 func (c *SignalCommand) Synopsis() string {

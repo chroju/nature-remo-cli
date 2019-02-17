@@ -17,7 +17,7 @@ func (c *AirconCommand) Run(args []string) int {
 }
 
 func (c *AirconCommand) Help() string {
-	return strings.TrimSpace(helpList)
+	return strings.TrimSpace(helpAircon)
 }
 
 func (c *AirconCommand) Synopsis() string {

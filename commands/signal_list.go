@@ -7,13 +7,13 @@ import (
 	"github.com/mitchellh/cli"
 )
 
-type ListCommand struct {
+type SignalListCommand struct {
 	UI cli.Ui
 }
 
-func (c *ListCommand) Run(args []string) int {
+func (c *SignalListCommand) Run(args []string) int {
 	if len(args) != 0 {
-		c.UI.Warn(fmt.Sprintf("%s\ncommand \"list\" does not expect any args", helpList))
+		c.UI.Warn(fmt.Sprintf("%s\ncommand \"signal list\" does not expect any args", helpSignalList))
 		return 1
 	}
 
@@ -38,12 +38,12 @@ func (c *ListCommand) Run(args []string) int {
 	return 0
 }
 
-func (c *ListCommand) Help() string {
-	return helpList
+func (c *SignalListCommand) Help() string {
+	return helpSignalList
 }
 
-func (c *ListCommand) Synopsis() string {
+func (c *SignalListCommand) Synopsis() string {
 	return "Show all appliance and signal names"
 }
 
-const helpList = "Usage: remo list"
+const helpSignalList = "Usage: remo signal list"

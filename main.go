@@ -38,11 +38,11 @@ func main() {
 		"signal": func() (cli.Command, error) {
 			return &commands.SignalCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
-		"list": func() (cli.Command, error) {
-			return &commands.ListCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
+		"signal list": func() (cli.Command, error) {
+			return &commands.SignalListCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
-		"send": func() (cli.Command, error) {
-			return &commands.SendCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
+		"signal send": func() (cli.Command, error) {
+			return &commands.SignalSendCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil
 		},
 		"sync": func() (cli.Command, error) {
 			return &commands.SyncCommand{UI: &cli.ColoredUi{Ui: ui, ErrorColor: cli.UiColorRed}}, nil

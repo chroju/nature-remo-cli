@@ -9,13 +9,13 @@ import (
 	"github.com/tenntenn/natureremo"
 )
 
-type SendCommand struct {
+type SignalSendCommand struct {
 	UI cli.Ui
 }
 
-func (c *SendCommand) Run(args []string) int {
+func (c *SignalSendCommand) Run(args []string) int {
 	if len(args) != 2 {
-		c.UI.Warn(fmt.Sprintf("%s\nSpecify appliance and signal name", helpSend))
+		c.UI.Warn(fmt.Sprintf("%s\nSpecify appliance and signal name", helpSignalSend))
 		return 1
 	}
 	applianceName := args[0]
@@ -63,16 +63,16 @@ func (c *SendCommand) Run(args []string) int {
 		return 1
 	}
 
-	c.UI.Output("Success.")
+	c.UI.Output("Succeeded.")
 	return 0
 }
 
-func (c *SendCommand) Help() string {
-	return helpSend
+func (c *SignalSendCommand) Help() string {
+	return helpSignalSend
 }
 
-func (c *SendCommand) Synopsis() string {
+func (c *SignalSendCommand) Synopsis() string {
 	return "Send signal"
 }
 
-const helpSend = "Usage: remo send <appliance> <signal>"
+const helpSignalSend = "Usage: remo signal send <appliance> <signal>"
