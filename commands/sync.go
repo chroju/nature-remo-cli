@@ -13,7 +13,7 @@ type SyncCommand struct {
 
 func (c *SyncCommand) Run(args []string) int {
 	if len(args) != 0 {
-		c.UI.Warn(fmt.Sprintf("%s\ncommand \"sync\" does not expect any args", helpSync))
+		c.UI.Warn(fmt.Sprintf("%s\n\ncommand \"sync\" does not expect any args", helpSync))
 		return 1
 	}
 

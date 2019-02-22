@@ -13,7 +13,7 @@ type InitCommand struct {
 
 func (c *InitCommand) Run(args []string) int {
 	if len(args) > 0 {
-		c.UI.Error(fmt.Sprintf("%s\ncommand \"init\" does not expect any args", helpInit))
+		c.UI.Error(fmt.Sprintf("%s\n\ncommand \"init\" does not expect any args", helpInit))
 		return 1
 	}
 

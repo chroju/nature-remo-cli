@@ -57,13 +57,13 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	dirPath := path.Dir(c.path)
 	if _, err := os.Stat(dirPath); err == os.ErrNotExist {
 		if err := os.MkdirAll(dirPath, 0755); err != nil {
-			return errors.Wrap(err, fmt.Sprintf("Failed to make directory at %s", dirPath))
+			return errors.Wrap(err, fmt.Sprintf("Failed to make directory at %s.", dirPath))
 		}
 	}
 
 	file, err := os.Create(c.path)
 	if err != nil {
-		return errors.Wrap(err, fmt.Sprintf("Failed to create config file %s", c.path))
+		return errors.Wrap(err, fmt.Sprintf("Failed to create config file %s.", c.path))
 	}
 	defer file.Close()
 
@@ -72,7 +72,7 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	ctx := context.Background()
 	appliances, err := client.ApplianceService.GetAll(ctx)
 	if err != nil {
-		return fmt.Errorf("Failed to login")
+		return fmt.Errorf("Failed to login.")
 	}
 
 	for _, a := range appliances {

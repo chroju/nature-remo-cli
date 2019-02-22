@@ -150,7 +150,7 @@ func (c *AirconSendCommand) Run(args []string) int {
 			c.UI.Error(err.Error())
 			return 1
 		}
-		c.UI.Output(fmt.Sprintf("Updated Aircon \"%s\" (%s)", name, strings.Join(updateMessage, ", ")))
+		c.UI.Output(fmt.Sprintf("Updated Aircon \"%s\" settings (%s)", name, strings.Join(updateMessage, ", ")))
 	}
 
 	return 0
@@ -164,12 +164,12 @@ func (c *AirconSendCommand) Synopsis() string {
 	return "Update the aircon settings."
 }
 
-const helpAirconSend = `Usage: remo aircon send [OPTION]
+const helpAirconSend = `Usage: remo aircon send -n name [OPTION]
 
   -n, --name string          Aircon name to operate
 
-  --on                       Power on the aircon
-  --off                      Power off the aircon
+  --on                       Power on the aircon (exclusive with --off)
+  --off                      Power off the aircon (exclusive with --on)
   -m, --mode string          Aircon operation mode
   -t, --temperature string   Aircon temperature
   -v, --volume string        Aircon wind volume

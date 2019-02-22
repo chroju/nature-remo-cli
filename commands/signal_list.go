@@ -13,7 +13,7 @@ type SignalListCommand struct {
 
 func (c *SignalListCommand) Run(args []string) int {
 	if len(args) != 0 {
-		c.UI.Warn(fmt.Sprintf("%s\ncommand \"signal list\" does not expect any args", helpSignalList))
+		c.UI.Warn(fmt.Sprintf("%s\n\ncommand \"signal list\" does not expect any args", helpSignalList))
 		return 1
 	}
 

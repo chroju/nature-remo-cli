@@ -3,6 +3,7 @@ package commands
 import (
 	"bytes"
 	"context"
+	"fmt"
 
 	"github.com/chroju/nature-remo-cli/configfile"
 	"github.com/mitchellh/cli"
@@ -16,7 +17,7 @@ type AirconListCommand struct {
 
 func (c *AirconListCommand) Run(args []string) int {
 	if len(args) != 0 {
-		c.UI.Warn(helpAirconList)
+		c.UI.Warn(fmt.Sprintf("%s\n\ncommand \"aircon list\" does not expect any args", helpAirconList))
 		return 1
 	}
 

@@ -15,7 +15,7 @@ type SignalSendCommand struct {
 
 func (c *SignalSendCommand) Run(args []string) int {
 	if len(args) != 2 {
-		c.UI.Warn(fmt.Sprintf("%s\nSpecify appliance and signal name", helpSignalSend))
+		c.UI.Warn(fmt.Sprintf("%s\n\nSpecify appliance and signal name", helpSignalSend))
 		return 1
 	}
 	applianceName := args[0]
@@ -46,7 +46,7 @@ func (c *SignalSendCommand) Run(args []string) int {
 		}
 	}
 	if toSendSignal == nil {
-		c.UI.Error(fmt.Sprintf("Appliance '%s' - Signal '%s' is invalid", applianceName, signalName))
+		c.UI.Error(fmt.Sprintf("Failed. Appliance '%s' - Signal '%s' is not found.", applianceName, signalName))
 		return 1
 	}
 

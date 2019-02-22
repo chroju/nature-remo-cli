@@ -28,6 +28,6 @@ const helpAircon = `
 Usage: remo aircon <subcommand>
 
 SubCommands:
-	list	List air conditionars
-	send	Send signal to change the air conditionar setting
+    list    List air conditionars
+    send    Send signal to change the air conditionar setting
 `

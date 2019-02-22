@@ -28,6 +28,6 @@ const helpSignal = `
 Usage: remo signal <subcommand>
 
 SubCommands:
-    list	List signals
-    send	Send the specified signal
+    list    List signals
+    send    Send the specified signal
 `
