@@ -67,7 +67,6 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	}
 	defer file.Close()
 
-	// client := cloud.NewClient(token)
 	client := natureremo.NewClient(token)
 	ctx := context.Background()
 	appliances, err := client.ApplianceService.GetAll(ctx)
