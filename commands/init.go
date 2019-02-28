@@ -33,7 +33,7 @@ func (c *InitCommand) Run(args []string) int {
 			if reply == "y" {
 				break
 			} else if reply == "n" {
-				return 2
+				return 0
 			} else {
 				reply, err = c.UI.Ask("[y/n]?")
 				if err != nil {

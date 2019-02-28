@@ -23,6 +23,27 @@ func (c *SyncCommand) Run(args []string) int {
 		return 1
 	}
 
+	if _, err := con.LoadToken(); err == nil {
+		reply, err := c.UI.Ask("Override current settings ? [y/n]")
+		if err != nil {
+			c.UI.Error(err.Error())
+			return 1
+		}
+		for {
+			if reply == "y" {
+				break
+			} else if reply == "n" {
+				return 0
+			} else {
+				reply, err = c.UI.Ask("[y/n]?")
+				if err != nil {
+					c.UI.Error(err.Error())
+					return 1
+				}
+			}
+		}
+	}
+
 	if err := con.SyncConfigFile(""); err != nil {
 		c.UI.Error(err.Error())
 		return 1
