@@ -90,10 +90,10 @@ func (c *AirconSendCommand) Run(args []string) int {
 		return 1
 	} else if on && settings.Button == natureremo.ButtonPowerOff {
 		newSettings.Button = natureremo.ButtonPowerOn
-		updateMessage = append(updateMessage, "OFF -> ON")
+		updateMessage = append(updateMessage, "POWER: OFF -> ON")
 	} else if off && settings.Button != natureremo.ButtonPowerOff {
 		newSettings.Button = natureremo.ButtonPowerOff
-		updateMessage = append(updateMessage, "ON -> OFF")
+		updateMessage = append(updateMessage, "POWER: ON -> OFF")
 	}
 
 	switch mode {
@@ -109,7 +109,7 @@ func (c *AirconSendCommand) Run(args []string) int {
 		newSettings.OperationMode = natureremo.OperationModeAuto
 	}
 	if newSettings.OperationMode != settings.OperationMode {
-		updateMessage = append(updateMessage, fmt.Sprintf("%s -> %s", settings.OperationMode.StringValue(), mode))
+		updateMessage = append(updateMessage, fmt.Sprintf("MODE: %s -> %s", settings.OperationMode.StringValue(), mode))
 	}
 
 	switch volume {
@@ -137,12 +137,12 @@ func (c *AirconSendCommand) Run(args []string) int {
 		newSettings.AirVolume = natureremo.AirVolumeAuto
 	}
 	if newSettings.AirVolume != settings.AirVolume {
-		updateMessage = append(updateMessage, fmt.Sprintf("%s -> %s", settings.AirVolume.StringValue(), volume))
+		updateMessage = append(updateMessage, fmt.Sprintf("VOLUME: %s -> %s", settings.AirVolume.StringValue(), volume))
 	}
 
 	if len(temperature) > 0 && settings.Temperature != temperature {
 		newSettings.Temperature = temperature
-		updateMessage = append(updateMessage, fmt.Sprintf("%s -> %s", settings.Temperature, temperature))
+		updateMessage = append(updateMessage, fmt.Sprintf("TEMP: %s -> %s", settings.Temperature, temperature))
 	}
 
 	if len(updateMessage) > 0 {
