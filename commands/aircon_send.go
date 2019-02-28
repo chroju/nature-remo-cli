@@ -91,7 +91,7 @@ func (c *AirconSendCommand) Run(args []string) int {
 	} else if on && settings.Button == natureremo.ButtonPowerOff {
 		newSettings.Button = natureremo.ButtonPowerOn
 		updateMessage = append(updateMessage, "OFF -> ON")
-	} else if off && settings.Button == natureremo.ButtonPowerOn {
+	} else if off && settings.Button != natureremo.ButtonPowerOff {
 		newSettings.Button = natureremo.ButtonPowerOff
 		updateMessage = append(updateMessage, "ON -> OFF")
 	}
