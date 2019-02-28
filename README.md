@@ -29,13 +29,12 @@ Successfully initialized.
 
 ```
 $ remo signal list
-APPLIANCE  SIGNAL
-light      on
-light      off
-light      brighten
-light      darken
-TV         power
-TV         1
+light on
+light off
+light brighten
+light darken
+TV power
+TV 1
 ...
 ```
 
@@ -52,9 +51,9 @@ Succeeded.
 
 ```
 $ remo aircon list
-           POWER  MODE  VOL   TEMP
-Bed Room:  ON     warm  2     25
-Dining:    OFF    auto  auto  22
+NAME      POWER  TEMP  MODE  VOLUME  DIRECTION
+Bed Room  ON     25    warm  2
+Dining    OFF    22    auto  auto
 ```
 
 You can update aircon setting with `remo aircon send`.
@@ -110,6 +109,7 @@ TODO
 * [ ] Write tests.
 * [ ] Implement commands for some sensors.
 * [ ] Implement commands for TV.
+* [ ] Implement `--direction` option to "aircon send" command
 
 Author
 ----
