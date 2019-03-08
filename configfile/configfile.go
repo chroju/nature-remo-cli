@@ -9,9 +9,9 @@ import (
 	"os/user"
 	"path"
 
-	"github.com/go-yaml/yaml"
 	"github.com/pkg/errors"
 	"github.com/tenntenn/natureremo"
+	yaml "gopkg.in/yaml.v2"
 )
 
 type Appliance struct {
