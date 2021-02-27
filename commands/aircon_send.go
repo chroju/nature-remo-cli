@@ -41,22 +41,26 @@ func (c *AirconSendCommand) Run(args []string) int {
 		c.UI.Warn(helpAirconSend)
 		return 1
 	}
+	if on && off {
+		c.UI.Error("Cannnot use --on and --off at the same time.")
+		return 1
+	}
 
 	path, err := configfile.GetConfigFilePath()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
 	}
 	con, err := configfile.New(path)
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
 	}
 
 	token, err := con.LoadToken()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
 	}
 
 	client := natureremo.NewClient(token)
@@ -65,7 +69,7 @@ func (c *AirconSendCommand) Run(args []string) int {
 	appliances, err := client.ApplianceService.GetAll(ctx)
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 3
 	}
 
 	for _, v := range appliances {
@@ -78,7 +82,7 @@ func (c *AirconSendCommand) Run(args []string) int {
 
 	if settings == nil {
 		c.UI.Error(fmt.Sprintf("Not Found Aircon \"%s\"", name))
-		return 1
+		return 3
 	}
 
 	newSettings := &natureremo.AirConSettings{
@@ -90,10 +94,7 @@ func (c *AirconSendCommand) Run(args []string) int {
 	}
 	var updateMessage []string
 
-	if on && off {
-		c.UI.Error("Cannnot use --on and --off at the same time.")
-		return 1
-	} else if on && settings.Button == natureremo.ButtonPowerOff {
+	if on && settings.Button == natureremo.ButtonPowerOff {
 		newSettings.Button = natureremo.ButtonPowerOn
 		updateMessage = append(updateMessage, "POWER: OFF -> ON")
 	} else if off && settings.Button != natureremo.ButtonPowerOff {
@@ -153,7 +154,7 @@ func (c *AirconSendCommand) Run(args []string) int {
 	if len(updateMessage) > 0 {
 		if err := client.ApplianceService.UpdateAirConSettings(ctx, aircon, newSettings); err != nil {
 			c.UI.Error(err.Error())
-			return 1
+			return 3
 		}
 		c.UI.Output(fmt.Sprintf("Updated Aircon \"%s\" settings (%s)", name, strings.Join(updateMessage, ", ")))
 	}
