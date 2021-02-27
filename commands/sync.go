@@ -44,7 +44,7 @@ func (c *SyncCommand) Run(args []string) int {
 		}
 	}
 
-	if err := con.SyncConfigFile(""); err != nil {
+	if err := con.Sync(""); err != nil {
 		c.UI.Error(err.Error())
 		return 1
 	}

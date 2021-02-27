@@ -51,7 +51,7 @@ func (c *InitCommand) Run(args []string) int {
 	}
 
 	c.UI.Output("Initializing ...")
-	if err := con.SyncConfigFile(token); err != nil {
+	if err := con.Sync(token); err != nil {
 		c.UI.Error("Failed to initialize!")
 		return 1
 	}
