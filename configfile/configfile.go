@@ -6,8 +6,8 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"os/user"
 	"path"
+	"path/filepath"
 
 	"github.com/pkg/errors"
 	"github.com/tenntenn/natureremo"
@@ -40,13 +40,7 @@ type configFile struct {
 	setting *Setting
 }
 
-func New() (Config, error) {
-	user, err := user.Current()
-	if err != nil {
-		return nil, errors.Wrap(err, "Unexpected error")
-	}
-
-	path := user.HomeDir + "/.config/remo"
+func New(path string) (Config, error) {
 
 	data, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -117,4 +111,21 @@ func (c *configFile) LoadAppliances() ([]*Appliance, error) {
 
 func (c *configFile) LoadAllSetting() (*Setting, error) {
 	return c.setting, nil
+}
+
+func GetConfigFilePath() (string, error) {
+	if v := os.Getenv("REMOCONFIG"); v != "" {
+		return v, nil
+	}
+
+	// default path
+	home := os.Getenv("HOME")
+	if home == "" {
+		home = os.Getenv("USERPROFILE") // Windows
+	}
+	if home == "" {
+		return "", fmt.Errorf("HOME and USERPROFILE environment variable not set")
+	}
+
+	return filepath.Join(home, ".config", "remo"), nil
 }

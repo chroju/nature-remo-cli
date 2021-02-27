@@ -42,7 +42,12 @@ func (c *AirconSendCommand) Run(args []string) int {
 		return 1
 	}
 
-	con, err := configfile.New()
+	path, err := configfile.GetConfigFilePath()
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 1
+	}
+	con, err := configfile.New(path)
 	if err != nil {
 		c.UI.Error(err.Error())
 		return 1
