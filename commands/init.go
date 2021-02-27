@@ -20,19 +20,19 @@ func (c *InitCommand) Run(args []string) int {
 	path, err := configfile.GetConfigFilePath()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 3
 	}
 	con, err := configfile.New(path)
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 3
 	}
 
 	if _, err := con.LoadToken(); err == nil {
 		reply, err := c.UI.Ask("You have already initialized remo. Override current settings ? [y/n]")
 		if err != nil {
 			c.UI.Error(err.Error())
-			return 1
+			return 10
 		}
 		for {
 			if reply == "y" {
@@ -52,13 +52,13 @@ func (c *InitCommand) Run(args []string) int {
 	token, err := c.UI.AskSecret("Nature Remo OAuth Token:")
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 10
 	}
 
 	c.UI.Output("Initializing ...")
 	if err := con.Sync(token); err != nil {
 		c.UI.Error("Failed to initialize!")
-		return 1
+		return 3
 	}
 	c.UI.Output("Successfully initialized.")
 
