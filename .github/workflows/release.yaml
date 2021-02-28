@@ -19,7 +19,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v2
         env:
           GO111MODULE: on
-          GITHUB_TOKEN: ${{ secrets.GITHUB_RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           version: latest
           args: release --rm-dist
