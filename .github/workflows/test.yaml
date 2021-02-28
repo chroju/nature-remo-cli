@@ -1,0 +1,33 @@
+name: test
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: Test nature-remo-cli
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Setup go
+        uses: actions/setup-go@v1
+        with:
+          go-version: "1.16.0"
+      - name: Run Unit tests
+        env:
+          GO111MODULE: on
+        run: |
+          make test-coverage
+      - name: Install goveralls
+        env:
+          GO111MODULE: off
+        run: go get github.com/mattn/goveralls
+      - name: Send coverage
+        uses: shogo82148/actions-goveralls@v1
+        with:
+          path-to-profile: covprofile

@@ -1,0 +1,16 @@
+credential:
+  token: _TESTTOKEN
+appliances:
+  - name: TV
+    id: TV-id
+    type: TV
+    signals: []
+  - name: light
+    id: light-id
+    signals:
+      - id: signal-1
+        name: brighten
+        image: ico_foo
+      - id: signal-2
+        name: darken
+        image: ico_bar

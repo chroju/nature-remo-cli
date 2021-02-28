@@ -1,19 +1,23 @@
 Nature Remo command line interface
 ========
 
-`remo` is the unofficial command line interface for [Nature Remo](https://nature.global/).
+[![release badge](https://img.shields.io/github/v/release/chroju/nature-remo-cli.svg)](https://github.com/chroju/nature-remo-cli/releases)
+[![Coverage Status](https://coveralls.io/repos/github/chroju/nature-remo-cli/badge.svg?branch=main)](https://coveralls.io/github/chroju/nature-remo-cli?branch=main)
+
+
+`remo` is an unofficial command line interface for [Nature Remo](https://nature.global/).
 
 Prerequisites
 ----
 
-You will need your Nature Remo OAuth2 access token. Please read Nature Remo official document [here](https://developer.nature.global/).
+You will need your Nature Remo OAuth2 access token. Please read Nature Remo official document [here](https://developer.nature.global/) and generate your own access token.
 
 Usage
 ----
 
 ### Initialize
 
-At first, you must execute `remo init` command to initialize. You will be prompted for your OAuth2 token.
+At first, you must execute `remo init` command to initialize. You will be asked to enter your access token.
 
 ```
 $ remo init
@@ -22,6 +26,10 @@ Nature Remo OAuth Token:
 Initializing ...
 Successfully initialized.
 ```
+
+Now, you can use `remo` !
+
+**Note:** `remo init` command creates a configuration file in `~/.config/remo` by default. The location of the configuration file can be specified with `REMOCONFIG` environment variable.
 
 ### Signal
 
@@ -69,9 +77,15 @@ Updated Aircon 'Dining' (POWER: OFF -> ON)
 Install
 ----
 
+### Homebrew
+
+```bash
+$ brew install chroju/tap/nature-remo-cli
+```
+
 ### Download binary
 
-Download binary from [here](https://github.com/chroju/nature-remo-cli/releases) and put it in your `$PATH` directory.
+Download the latest binary from [here](https://github.com/chroju/nature-remo-cli/releases) and  place it in the some directory specified by `$PATH`.
 
 ### go get
 
@@ -106,15 +120,10 @@ appliances:
 TODO
 ----
 
-* [ ] Write tests.
+* [x] Write tests.
 * [ ] Implement commands for some sensors.
 * [ ] Implement commands for TV.
 * [ ] Implement `--direction` option to "aircon send" command
-
-Author
-----
-
-[chroju](https://github.com/chroju)
 
 LICENSE
 ----

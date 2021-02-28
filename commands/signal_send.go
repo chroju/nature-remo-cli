@@ -21,16 +21,21 @@ func (c *SignalSendCommand) Run(args []string) int {
 	applianceName := args[0]
 	signalName := args[1]
 
-	con, err := configfile.New()
+	path, err := configfile.GetConfigFilePath()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
+	}
+	con, err := configfile.New(path)
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 2
 	}
 
 	appliances, err := con.LoadAppliances()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
 	}
 
 	var toSendSignal *natureremo.Signal
@@ -53,14 +58,14 @@ func (c *SignalSendCommand) Run(args []string) int {
 	token, err := con.LoadToken()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
 	}
 
 	client := natureremo.NewClient(token)
 	ctx := context.Background()
 	if err := client.SignalService.Send(ctx, toSendSignal); err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 3
 	}
 
 	c.UI.Output("Succeeded.")

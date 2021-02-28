@@ -1,0 +1,45 @@
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - 386
+      - amd64
+      - arm64
+    binary: remo
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - none*
+changelog:
+  skip: true
+brews:
+  - name: nature-remo-cli
+    tap:
+      owner: chroju
+      name: homebrew-tap
+      token:
+    url_template: "https://github.com/chroju/nature-remo-cli/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    description: "Unofficial command line interface for Nature Remo."
+    homepage: "https://github.com/chroju/nature-remo-cli"
+    license: "MIT"
+    test: |
+      system "#{bin}/remo --version"
+    install: |
+      bin.install "remo"

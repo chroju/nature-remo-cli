@@ -17,10 +17,15 @@ func (c *SyncCommand) Run(args []string) int {
 		return 1
 	}
 
-	con, err := configfile.New()
+	path, err := configfile.GetConfigFilePath()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
+	}
+	con, err := configfile.New(path)
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 2
 	}
 
 	if _, err := con.LoadToken(); err == nil {
@@ -44,9 +49,9 @@ func (c *SyncCommand) Run(args []string) int {
 		}
 	}
 
-	if err := con.SyncConfigFile(""); err != nil {
+	if err := con.Sync(""); err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 3
 	}
 
 	c.UI.Output("Synced!")

@@ -6,8 +6,8 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"os/user"
 	"path"
+	"path/filepath"
 
 	"github.com/pkg/errors"
 	"github.com/tenntenn/natureremo"
@@ -25,30 +25,47 @@ type Setting struct {
 	Credential struct {
 		Token string
 	}
-	Appliances []Appliance
+	Appliances []*Appliance
 }
 
-type ConfigFile struct {
-	path string
+type Config interface {
+	LoadAllSetting() (*Setting, error)
+	LoadToken() (string, error)
+	LoadAppliances() ([]*Appliance, error)
+	Sync(string) error
 }
 
-func New() (*ConfigFile, error) {
-	user, err := user.Current()
+type configFile struct {
+	path    string
+	setting *Setting
+}
+
+func New(path string) (Config, error) {
+
+	data, err := ioutil.ReadFile(path)
 	if err != nil {
-		return nil, errors.Wrap(err, "Unexpected error")
+		return nil, errors.Wrap(err, "You have not correctly initialized. Please execute \"remo init\"")
 	}
 
-	path := user.HomeDir + "/.config/remo"
-	return &ConfigFile{path: path}, nil
+	setting := &Setting{}
+	err = yaml.Unmarshal(data, setting)
+	if err != nil {
+		return nil, err
+	}
+
+	return &configFile{
+		path:    path,
+		setting: setting,
+	}, nil
 }
 
-func (c *ConfigFile) SyncConfigFile(token string) error {
+func (c *configFile) Sync(token string) error {
 	if token == "" {
-		file, err := c.readFile()
+		var err error
+		token, err = c.LoadToken()
 		if err != nil {
 			return err
 		}
-		token = file.Credential.Token
 	}
 
 	s := Setting{}
@@ -75,7 +92,7 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	}
 
 	for _, a := range appliances {
-		s.Appliances = append(s.Appliances, Appliance{Name: a.Nickname, ID: a.ID, Type: a.Type, Signals: a.Signals})
+		s.Appliances = append(s.Appliances, &Appliance{Name: a.Nickname, ID: a.ID, Type: a.Type, Signals: a.Signals})
 	}
 
 	y, err := yaml.Marshal(&s)
@@ -84,38 +101,31 @@ func (c *ConfigFile) SyncConfigFile(token string) error {
 	return nil
 }
 
-func (c *ConfigFile) LoadToken() (string, error) {
-	s, err := c.readFile()
-	if err != nil {
-		return "", err
-	}
-	if s.Credential.Token == "" {
-		return "", fmt.Errorf("You have not correctly initialized. Please execute \"remo init\"")
-	}
-
-	return s.Credential.Token, nil
+func (c *configFile) LoadToken() (string, error) {
+	return c.setting.Credential.Token, nil
 }
 
-func (c *ConfigFile) LoadAppliances() ([]Appliance, error) {
-	s, err := c.readFile()
-	if err != nil {
-		return nil, err
-	}
-
-	return s.Appliances, nil
+func (c *configFile) LoadAppliances() ([]*Appliance, error) {
+	return c.setting.Appliances, nil
 }
 
-func (c *ConfigFile) readFile() (*Setting, error) {
-	data, err := ioutil.ReadFile(c.path)
-	if err != nil {
-		return nil, errors.Wrap(err, "You have not correctly initialized. Please execute \"remo init\"")
+func (c *configFile) LoadAllSetting() (*Setting, error) {
+	return c.setting, nil
+}
+
+func GetConfigFilePath() (string, error) {
+	if v := os.Getenv("REMOCONFIG"); v != "" {
+		return v, nil
 	}
 
-	s := Setting{}
-	err = yaml.Unmarshal(data, &s)
-	if err != nil {
-		return nil, err
+	// default path
+	home := os.Getenv("HOME")
+	if home == "" {
+		home = os.Getenv("USERPROFILE") // Windows
+	}
+	if home == "" {
+		return "", fmt.Errorf("HOME and USERPROFILE environment variable not set")
 	}
 
-	return &s, nil
+	return filepath.Join(home, ".config", "remo"), nil
 }

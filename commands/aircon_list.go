@@ -21,16 +21,21 @@ func (c *AirconListCommand) Run(args []string) int {
 		return 1
 	}
 
-	con, err := configfile.New()
+	path, err := configfile.GetConfigFilePath()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
+	}
+	con, err := configfile.New(path)
+	if err != nil {
+		c.UI.Error(err.Error())
+		return 2
 	}
 
 	token, err := con.LoadToken()
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 2
 	}
 
 	client := natureremo.NewClient(token)
@@ -39,7 +44,7 @@ func (c *AirconListCommand) Run(args []string) int {
 	appliances, err := client.ApplianceService.GetAll(ctx)
 	if err != nil {
 		c.UI.Error(err.Error())
-		return 1
+		return 3
 	}
 
 	buf := &bytes.Buffer{}
