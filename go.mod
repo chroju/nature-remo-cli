@@ -8,7 +8,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/mitchellh/cli v1.0.0
 	github.com/olekukonko/tablewriter v0.0.1
-	github.com/pkg/errors v0.8.0
+	github.com/pkg/errors v0.9.1
 	github.com/posener/complete v1.2.0 // indirect
 	github.com/spf13/pflag v1.0.5
 	github.com/tenntenn/natureremo v0.0.1
