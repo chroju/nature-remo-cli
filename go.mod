@@ -12,6 +12,6 @@ require (
 	github.com/posener/complete v1.2.0 // indirect
 	github.com/spf13/pflag v1.0.3
 	github.com/tenntenn/natureremo v0.0.1
-	golang.org/x/sys v0.0.0-20181019160139-8e24a49d80f8 // indirect
+	golang.org/x/sys v0.1.0 // indirect
 	gopkg.in/yaml.v2 v2.2.2
 )
