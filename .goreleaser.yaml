@@ -31,6 +31,7 @@ changelog:
   skip: true
 brews:
   - name: nature-remo-cli
+    skip_upload: true
     tap:
       owner: chroju
       name: homebrew-tap
