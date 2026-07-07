@@ -44,19 +44,19 @@ var (
 func TestNew(t *testing.T) {
 	_, err := New(testFilePath)
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Error(err)
 	}
 }
 
 func TestLoadToken(t *testing.T) {
 	config, err := New(testFilePath)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
 	gottenToken, err := config.LoadToken()
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	if gottenToken != expectedToken {
 		t.Errorf("want: %s\nget : %s", expectedToken, gottenToken)
@@ -66,12 +66,12 @@ func TestLoadToken(t *testing.T) {
 func TestLoadAppliances(t *testing.T) {
 	config, err := New(testFilePath)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
 	gottenAppliances, err := config.LoadAppliances()
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	if !reflect.DeepEqual(gottenAppliances, expectedAppliances) {
 		t.Errorf("want: %v\nget : %v", expectedAppliances, gottenAppliances)
@@ -83,12 +83,12 @@ func TestLoadAllSetting(t *testing.T) {
 
 	config, err := New(testFilePath)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
 	gottenSetting, err := config.LoadAllSetting()
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	if !reflect.DeepEqual(gottenSetting, expectedSetting) {
 		t.Errorf("want: %v\nget : %v", expectedSetting, gottenSetting)
@@ -100,7 +100,7 @@ func TestGetConfigFilePath(t *testing.T) {
 
 	gotten, err := GetConfigFilePath()
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	if gotten != expected {
 		t.Errorf("want: %s\nget : %s", expected, gotten)
