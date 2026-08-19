@@ -1,3 +1,5 @@
+
+
 Nature Remo command line interface
 ========
 
@@ -115,7 +117,7 @@ appliances:
     image: ico_bar
 ```
 
-`remo signal` commands load the names of your Nature Remo appliances and signals from here, so you can execute `remo send light brighten` and `remo send light darken` with above file. If you would like to execute commands with the signal names you like, you can rewrite your YAML.
+`remo signal` commands load the names of your Nature Remo appliances and signals from here, so you can execute `remo signal send light brighten` and `remo signal send light darken` with above file. If you would like to execute commands with the signal names you like, you can rewrite your YAML.
 
 TODO
 ----
