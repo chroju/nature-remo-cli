@@ -1,6 +1,6 @@
 module github.com/chroju/nature-remo-cli
 
-go 1.25.0
+go 1.26.10
 
 require (
 	github.com/mitchellh/cli v1.0.0
