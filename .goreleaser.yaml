@@ -1,3 +1,4 @@
+version: 2
 env:
   - GO111MODULE=on
 before:
@@ -24,23 +25,8 @@ archives:
       {{- else }}{{ .Arch }}{{ end }}
     format_overrides:
       - goos: windows
-        format: zip
+        formats: ["zip"]
     files:
       - none*
 changelog:
-  skip: true
-brews:
-  - name: nature-remo-cli
-    skip_upload: true
-    tap:
-      owner: chroju
-      name: homebrew-tap
-      token:
-    url_template: "https://github.com/chroju/nature-remo-cli/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-    description: "Unofficial command line interface for Nature Remo."
-    homepage: "https://github.com/chroju/nature-remo-cli"
-    license: "MIT"
-    test: |
-      system "#{bin}/remo --version"
-    install: |
-      bin.install "remo"
+  disable: true
