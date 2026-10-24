@@ -23,5 +23,5 @@ jobs:
           GO111MODULE: on
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          version: '~> v1'
-          args: release --rm-dist
+          version: '~> v2'
+          args: release --clean
